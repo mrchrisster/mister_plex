@@ -4,7 +4,7 @@
 
 ## What is it?
 **MiSTer Plex can play video files from your Plex library.**  
-Easy way to play videos on your MiSTer through plex. All you need is SSH access
+Easy way to play videos on your MiSTer through Plex. All you need is SSH access
 
 ## Installation
   
