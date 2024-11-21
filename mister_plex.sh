@@ -15,8 +15,8 @@ fi
 # CRT DEFAULTS
 samvideo_output="CRT" 
 samvideo_source="youtube" #leave as is, needed for crtmode320
-samvideo_crtmode320="video_mode=320,-16,32,32,240,1,3,13,5670" #change if your display isn't syncing
-#samvideo_crtmode320="video_mode=320,16,20,64,240,1,3,15,6800" #alt
+#samvideo_crtmode320="video_mode=320,-16,32,32,240,1,3,13,5670" #change if your display isn't syncing
+samvideo_crtmode320="video_mode=320,16,20,64,240,1,3,15,6800" #alt
 VIDEO_RES="320x240" # Plex transcoding resolution.
 
 # HDMI DEFAULTS
@@ -25,7 +25,7 @@ VIDEO_RES="320x240" # Plex transcoding resolution.
 #VIDEO_RES="640x480" # Plex transcoding resolution. 
 
 
-#samvideo_displaywait="3" # change if it takes a while for your display to show menu core
+volume="15" #try between 1-20
 
 
 
@@ -70,8 +70,6 @@ if [[ -z "$URL_TOKEN" ]]; then
     exit 1
 fi
 
-options="-af volume=10:1" #louder
-
 echo "Updating video_mode in MiSTer.ini..."
 
 misterini_mod
@@ -95,4 +93,4 @@ sleep "${samvideo_displaywait}"
 ${mrsampath}/mbc raw_seq :43
 echo "Ctrl +c to cancel playback"
 
-nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer "${options}" "$TRANSCODE_URL"
+nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer -af volume=${volume}:1 "$TRANSCODE_URL"
