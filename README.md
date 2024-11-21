@@ -1,5 +1,4 @@
 # MiSTer Plex
-![Terminal](https://github.com/mrchrisster/mister_plex/blob/main/media/terminal.png)
 ![Get Info](https://github.com/mrchrisster/mister_plex/blob/main/media/view%20xml.png)
 
 
