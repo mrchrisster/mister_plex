@@ -2,6 +2,9 @@
 
 if [[ -f "/media/fat/Scripts/MiSTer_SAM_on.sh" ]]; then
 	source /media/fat/Scripts/MiSTer_SAM_on.sh --sourceonly
+	if [ "$(ps aux | grep -ice "[M]iSTer_SAM_on")" -ne 0 ]; then
+		/media/fat/Scripts/MiSTer_SAM_on.sh stop
+	fi
 else
     echo "Error: MiSTer SAM not installed."
     exit 1
@@ -13,6 +16,7 @@ fi
 samvideo_output="CRT" 
 samvideo_source="youtube" #leave as is, needed for crtmode320
 samvideo_crtmode320="video_mode=320,-16,32,32,240,1,3,13,5670" #change if your display isn't syncing
+#samvideo_crtmode320="video_mode=320,16,20,64,240,1,3,15,6800" #alt
 VIDEO_RES="320x240" # Plex transcoding resolution.
 
 # HDMI DEFAULTS
@@ -66,7 +70,7 @@ if [[ -z "$URL_TOKEN" ]]; then
     exit 1
 fi
 
-
+options="-af volume=10:1" #louder
 
 echo "Updating video_mode in MiSTer.ini..."
 
@@ -91,4 +95,4 @@ sleep "${samvideo_displaywait}"
 ${mrsampath}/mbc raw_seq :43
 echo "Ctrl +c to cancel playback"
 
-nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer "$TRANSCODE_URL"
+nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer "${options}" "$TRANSCODE_URL"
