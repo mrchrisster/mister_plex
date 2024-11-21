@@ -1,5 +1,6 @@
 # MiSTer Plex
-![Plex](https://github.com/mrchrisster/MiSTer_SAM/blob/main/Media/2023-04-sam_menu1.png)
+![Terminal](https://github.com/mrchrisster/mister_plex/blob/main/media/terminal.png)
+![Get Info](https://github.com/mrchrisster/mister_plex/blob/main/media/view%20xml.png)
 
 
 ## What is it?
