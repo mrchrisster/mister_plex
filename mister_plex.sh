@@ -15,8 +15,8 @@ fi
 # CRT DEFAULTS
 samvideo_output="CRT" 
 samvideo_source="youtube" #leave as is, needed for crtmode320
-#samvideo_crtmode320="video_mode=320,-16,32,32,240,1,3,13,5670" #change if your display isn't syncing
-samvideo_crtmode320="video_mode=320,16,20,64,240,1,3,15,6800" #alt
+samvideo_crtmode320="video_mode=320,-16,32,32,240,1,3,13,5670" #change if your display isn't syncing
+#samvideo_crtmode320="video_mode=320,16,20,64,240,1,3,15,6800" #alt
 VIDEO_RES="320x240" # Plex transcoding resolution.
 
 # HDMI DEFAULTS
@@ -25,7 +25,7 @@ VIDEO_RES="320x240" # Plex transcoding resolution.
 #VIDEO_RES="640x480" # Plex transcoding resolution. 
 
 
-volume="15" #try between 1-20
+volume="1" #try between 1-20
 
 
 
@@ -76,7 +76,7 @@ misterini_mod
 echo "MiSTer.ini updated successfully with video_mode: $VIDEO_MODE"
 
 # Generate MPlayer command
-TRANSCODE_URL="http://$(echo "$PLEX_URL" | cut -d'/' -f3)/video/:/transcode/universal/start.m3u8?X-Plex-Platform=Chrome&copyts=1&mediaIndex=0&offset=0&path=%2Flibrary%2Fmetadata%2F$METADATA_ID&videoResolution=$VIDEO_RES&X-Plex-Token=$URL_TOKEN&directStream=0&directPlay=0"
+TRANSCODE_URL="http://$(echo "$PLEX_URL" | cut -d'/' -f3)/video/:/transcode/universal/start.m3u8?X-Plex-Platform=Chrome&copyts=1&mediaIndex=0&offset=0&path=%2Flibrary%2Fmetadata%2F$METADATA_ID&videoResolution=$VIDEO_RES&maxVideoBitrate=1000&X-Plex-Token=$URL_TOKEN&directStream=0&directPlay=0"
 
 echo "Generated Transcode URL:"
 echo "$TRANSCODE_URL"
@@ -93,4 +93,4 @@ sleep "${samvideo_displaywait}"
 ${mrsampath}/mbc raw_seq :43
 echo "Ctrl +c to cancel playback"
 
-nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer -af volume=${volume}:1 "$TRANSCODE_URL"
+nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer -noaspect -sws 0 -cache 8192 -vf scale,format=bgra -af volume=${volume}:1  "$TRANSCODE_URL"
