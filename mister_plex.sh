@@ -25,7 +25,6 @@ VIDEO_RES="320x240" # Plex transcoding resolution.
 #VIDEO_RES="640x480" # Plex transcoding resolution. 
 
 
-volume="1" #try between 1-20
 
 
 
@@ -93,4 +92,4 @@ sleep "${samvideo_displaywait}"
 ${mrsampath}/mbc raw_seq :43
 echo "Ctrl +c to cancel playback"
 
-nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer -noaspect -sws 0 -cache 8192 -vf scale,format=bgra -af volume=${volume}:1  "$TRANSCODE_URL"
+nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer "$TRANSCODE_URL"
