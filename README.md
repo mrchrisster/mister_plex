@@ -17,7 +17,7 @@ Easy way to play videos on your MiSTer through Plex. All you need is SSH access
 - Copy the url of the xml into mister plex script
 
 ## Notes
-- mplayer is not compiled with SSL. On your Plex server under Settings -> Network make sure Secure connections are set to preferred.
+- mplayer is not compiled with SSL. On your Plex server, make sure Settings -> Network -> Secure connections are set to preferred.
 - Currently only tested with CRT in 320x240 mode
 - Change settings in mister_plex.sh to enable HDMI mode
 - Please let me know if it works for HDMI
