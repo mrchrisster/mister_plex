@@ -18,6 +18,7 @@ Easy way to play videos on your MiSTer through Plex. All you need is SSH access
 
 ## Notes
 - For CRT you might have to adjust the CRT settings in the script at the top if you get out of sync
+- The script launches menu core, thrn switches to terminal and uses mplayer with framebuffer support (thanks to wizzos compiled version) to play the videos. The script automatically tells plex it wants the videos to be transcoded to 320x240 so the Mister can play it back. anything at 480p might experience performance issues due to the MiSTers slow arm processor
 - mplayer is not compiled with SSL. On your Plex server, make sure Settings -> Network -> Secure connections are set to preferred.
 - Currently you'll get best results with CRT in 320x240 mode
 - For HDMI mode, use `mister_plex_hdmi.sh`
