@@ -12,7 +12,7 @@ Easy way to play videos on your MiSTer through Plex. All you need is SSH access
 - Make sure you have [ssh](https://boogermann.github.io/Bible_MiSTer/getting-started/network/network-access/) access to your MiSTer.
 - Make sure you have Super Attract Mode installed since we're using SAM's video function
 - Update Super Attract to latest version with `/media/fat/Scripts/MiSTer_SAM_on.sh update`
-- In a browser, browse to your Plex library. !! Make sure it is not the same computer as your Plex server (Otherwise it will create a link to localhost which Mister Plex won't understand) !!
+- In a browser, browse to your Plex library. !! Make sure you do this form a computer that is NOT the one where your Plex server is installed (Otherwise it will create a link to localhost which Mister Plex won't understand) !!
 - Pick a video file (ideally sd in 4:3 format) and click on Get Info -> [View XML](https://support.plex.tv/articles/201998867-investigate-media-information-and-formats/)
 - Launch mister plex with `/media/fat/Scripts/mister_plex.sh`
 - Copy the url of the xml into mister plex script
