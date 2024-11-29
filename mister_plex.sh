@@ -92,4 +92,4 @@ sleep "${samvideo_displaywait}"
 ${mrsampath}/mbc raw_seq :43
 echo "Ctrl +c to cancel playback"
 
-nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer "$TRANSCODE_URL"
+nice -n -20 env LD_LIBRARY_PATH=${mrsampath} ${mrsampath}/mplayer -fs "$TRANSCODE_URL"
