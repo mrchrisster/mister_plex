@@ -16,6 +16,7 @@ fi
 samvideo_output="HDMI"
 sv_aspectfix_vmode="yes"
 VIDEO_RES="640x480" # Plex transcoding resolution. 
+sv_inimod="yes" #Modify ini to add menu mode
 
 
 
