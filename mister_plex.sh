@@ -13,6 +13,7 @@ fi
 #### VARIABLES ####
 
 # CRT DEFAULTS
+sv_inimod="yes" #Modify ini to add menu mode
 samvideo_output="CRT" 
 samvideo_source="youtube" #leave as is, needed for crtmode320
 samvideo_crtmode320="video_mode=320,-16,32,32,240,1,3,13,5670" #change if your display isn't syncing
