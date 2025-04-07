@@ -18,6 +18,11 @@ Easy way to play videos on your MiSTer through Plex. All you need is SSH access
 - Launch mister plex with `/media/fat/Scripts/mister_plex.sh`
 - Copy the url of the xml into mister plex script
 
+## CRT Support
+- There is a good chance that your image won't look perfect on the CRT.
+- It might appear squished or stretched. In this case, play around with `samvideo_crtmode320` setting.
+- Here is a reddit thread with some more [settings](https://www.reddit.com/r/MiSTerFPGA/comments/1h17otk/comment/mkyzn19/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+
 ## HDMI Support
 - For HDMI mode, use `mister_plex_hdmi.sh`
 - It will most likely not work fullscreen and this script is not meant for HDMI displays
