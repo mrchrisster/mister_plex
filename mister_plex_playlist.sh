@@ -15,13 +15,13 @@ fi
 sv_inimod="yes"    # Update MiSTer.ini with CRT values. Set to no to leave MiSTer.ini untouched.
 samvideo_output="CRT"
 samvideo_crtmode320="video_mode=320,27,20,53,240,1,3,15,6500"
-VIDEO_RES="640x480"
+VIDEO_RES="320x240"
 # Set permanent Base IP and URL Token from URL "http://BASE_IP/playlists/all/?X-Plex-Token=URL_Token"
 BASE_IP=""
 URL_TOKEN=""
 # Set permanent connection type. Uncomment and set "l" for local or "r" for remote.
 # For local servers, BASE_IP will be saved permanently.
-CONNECTION_CHOICE=""
+# CONNECTION_CHOICE=""
 
 # LEAVE AS IS
 TEMP_FILE="/tmp/playlist.xml"
