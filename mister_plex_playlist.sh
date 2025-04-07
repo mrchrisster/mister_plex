@@ -2,33 +2,33 @@
 
 # Source MiSTer_SAM_on.sh for samvideo functions
 if [[ -f "/media/fat/Scripts/MiSTer_SAM_on.sh" ]]; then
-	source /media/fat/Scripts/MiSTer_SAM_on.sh --source-only
-	if [ "$(ps aux | grep -ice "[M]iSTer_SAM_on")" -ne 0 ]; then
-		/media/fat/Scripts/MiSTer_SAM_on.sh stop
-	fi
+    source /media/fat/Scripts/MiSTer_SAM_on.sh --source-only
+    if [ "$(ps aux | grep -ice "[M]iSTer_SAM_on")" -ne 0 ]; then
+        /media/fat/Scripts/MiSTer_SAM_on.sh stop
+    fi
 else
     echo "Error: MiSTer SAM not installed."
     exit 1
 fi
 
 #### VARIABLES ####
-sv_inimod="yes" # Update MiSTer.ini with CRT values. Set to no if you want to leave MiSTer.ini untouched.
+sv_inimod="yes"    # Update MiSTer.ini with CRT values. Set to no to leave MiSTer.ini untouched.
 samvideo_output="CRT"
 samvideo_crtmode320="video_mode=320,27,20,53,240,1,3,15,6500"
-VIDEO_RES="320x240"
-# Set permanent Base IP and URL Token from URL "http://BASE_IP/playlists/all/?X-Plex-Token=URL_Token" 
-#BASE_IP="12-34-56-78.aa123456789.plex.direct:32400"
-#URL_TOKEN="XcNKJB879BHBIHJQ"
+VIDEO_RES="640x480"
+# Set permanent Base IP and URL Token from URL "http://BASE_IP/playlists/all/?X-Plex-Token=URL_Token"
+# For local servers, BASE_IP will be saved permanently.
 BASE_IP=""
 URL_TOKEN=""
+# Set permanent connection type. Uncomment and set "l" for local or "r" for remote.
+CONNECTION_CHOICE=""
 
 # LEAVE AS IS
 TEMP_FILE="/tmp/playlist.xml"
 samvideo_source="youtube" 
 
-
-# Only ask for URL if BASE_IP or URL_TOKEN not set
-if [[ -z "$BASE_IP" || -z "$URL_TOKEN" ]]; then
+# ----- First run: Token entry and connection type -----
+if [[ -z "$URL_TOKEN" ]]; then
     echo "Please paste the full Plex XML URL:"
     read -r PLEX_URL
 
@@ -38,16 +38,63 @@ if [[ -z "$BASE_IP" || -z "$URL_TOKEN" ]]; then
         exit 1
     fi
 
-    # Extract base IP and token
-    BASE_IP=$(echo "$PLEX_URL" | sed -n 's#https\?://\([^/]*\)/.*#\1#p')
-    URL_TOKEN=$(echo "$PLEX_URL" | sed -n 's/.*[?&]X-Plex-Token=\([^&]*\).*/\1/p')
+    # Extract temporary BASE_IP and URL_TOKEN from the provided URL.
+    TEMP_BASE_IP=$(echo "$PLEX_URL" | sed -n 's#https\?://\([^/]*\)/.*#\1#p')
+    TEMP_TOKEN=$(echo "$PLEX_URL" | sed -n 's/.*[?&]X-Plex-Token=\([^&]*\).*/\1/p')
 
-    if [[ -z "$BASE_IP" || -z "$URL_TOKEN" ]]; then
+    if [[ -z "$TEMP_BASE_IP" || -z "$TEMP_TOKEN" ]]; then
         echo "Error: Could not extract base IP or token."
+        exit 1
+    fi
+
+    # Ask if the user wants to save the TOKEN permanently.
+    echo "Would you like to save the extracted TOKEN permanently to this script? (y/n)"
+    read -r save_token_choice
+
+    if [[ "$save_token_choice" =~ ^[Yy] ]]; then
+        script_file="$0"
+        sed -i 's|^URL_TOKEN=".*"|URL_TOKEN="'"$TEMP_TOKEN"'"|' "$script_file"
+        echo "Saved TOKEN to the script."
+    fi
+    # Set token for current run.
+    URL_TOKEN="$TEMP_TOKEN"
+
+    # Ask if the Plex server is local or remote.
+    echo "Is your Plex server local or remote? (l/r):"
+    read -r connection_choice
+
+    if [[ "$connection_choice" =~ ^[Ll] ]]; then
+        # Local: save connection type and BASE_IP permanently.
+        script_file="$0"
+        sed -i 's|^# CONNECTION_CHOICE=".*"|CONNECTION_CHOICE="l"|' "$script_file"
+        sed -i 's|^BASE_IP=".*"|BASE_IP="'"$TEMP_BASE_IP"'"|' "$script_file"
+        echo "Saved connection type as local and saved BASE_IP to the script."
+        CONNECTION_CHOICE="l"
+        BASE_IP="$TEMP_BASE_IP"
+    elif [[ "$connection_choice" =~ ^[Rr] ]]; then
+        # Remote: save connection type only. BASE_IP will be determined each run.
+        script_file="$0"
+        sed -i 's|^# CONNECTION_CHOICE=".*"|CONNECTION_CHOICE="r"|' "$script_file"
+        echo "Saved connection type as remote. BASE_IP will be determined each run."
+        CONNECTION_CHOICE="r"
+    else
+        echo "Invalid selection. Exiting."
         exit 1
     fi
 fi
 
+# ----- Subsequent runs or remote mode: Determine BASE_IP if needed -----
+# If a token is saved and the connection type is remote, fetch BASE_IP from Plex.
+if [[ -n "$URL_TOKEN" && "${CONNECTION_CHOICE}" == "r" ]]; then
+    echo "Using remote connection. Querying Plex API for current BASE_IP..."
+    BASE_URI=$(curl -k -L -H "X-Plex-Token: $URL_TOKEN" "https://plex.tv/api/resources?includeHttps=1&includeRelay=1" | \
+               xmllint --xpath 'string(//Connection[@local="0" and not(@relay)]/@uri)' -)
+    BASE_IP=$(echo "$BASE_URI" | sed -e 's#https\?://##' -e 's#/.*##')
+    if [[ -z "$BASE_IP" ]]; then
+        echo "Error: Could not extract BASE_IP from the Plex API response."
+        exit 1
+    fi
+fi
 
 # Build playlist query URL
 PLAYLISTS_URL="http://${BASE_IP}/playlists/all/?X-Plex-Token=${URL_TOKEN}"
