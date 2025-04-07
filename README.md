@@ -18,11 +18,21 @@ Easy way to play videos on your MiSTer through Plex. All you need is SSH access
 - Launch mister plex with `/media/fat/Scripts/mister_plex.sh`
 - Copy the url of the xml into mister plex script
 
+## HDMI Support
+- For HDMI mode, use `mister_plex_hdmi.sh`
+- It will most likely not work fullscreen and this script is not meant for HDMI displays
+
+## Plex Playlist Support
+- Thanks to randomly-generated we now have playlist support for plex.
+- Use `mister_plex_playlist.sh`
+- Paste XML from any random file like explained above [View XML](https://support.plex.tv/articles/201998867-investigate-media-information-and-formats/)
+- The SSH script will now display your video playlistss you have on Plex
+
 ## Notes
 - For CRT you might have to adjust the CRT settings in the script at the top if you get out of sync or a squished/stretched image
 - mplayer is not compiled with SSL. On your Plex server, make sure Settings -> Network -> Secure connections are set to preferred.
 - Currently you'll get best results with CRT in 320x240 mode
-- For HDMI mode, use `mister_plex_hdmi.sh`
+
   
 ## How it works
 - The script launches menu core, then switches to terminal and uses mplayer with framebuffer support (thanks to wizzos compiled version) to play the videos. The script automatically tells plex it wants the videos to be transcoded to 320x240 for CRT output so the Mister can play it back.
