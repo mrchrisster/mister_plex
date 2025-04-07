@@ -16,30 +16,35 @@ sv_inimod="yes" # Update MiSTer.ini with CRT values. Set to no if you want to le
 samvideo_output="CRT"
 samvideo_crtmode320="video_mode=320,27,20,53,240,1,3,15,6500"
 VIDEO_RES="320x240"
+BASE_IP=""
+URL_TOKEN=""
 
 # LEAVE AS IS
 TEMP_FILE="/tmp/playlist.xml"
 samvideo_source="youtube" 
 
 
-# Prompt for Plex full URL (e.g. from "Get XML")
-echo "Please paste the full Plex XML URL:"
-read -r PLEX_URL
-
-# Validate the URL
-if [[ ! "$PLEX_URL" =~ ^https?:// ]]; then
-    echo "Error: Invalid URL. Please provide a valid Plex URL."
-    exit 1
-fi
-
-# Extract base IP and token
-BASE_IP=$(echo "$PLEX_URL" | sed -n 's#https\?://\([^/]*\)/.*#\1#p')
-URL_TOKEN=$(echo "$PLEX_URL" | sed -n 's/.*[?&]X-Plex-Token=\([^&]*\).*/\1/p')
-
+# Only ask for URL if BASE_IP or URL_TOKEN not set
 if [[ -z "$BASE_IP" || -z "$URL_TOKEN" ]]; then
-    echo "Error: Could not extract base IP or token."
-    exit 1
+    echo "Please paste the full Plex XML URL:"
+    read -r PLEX_URL
+
+    # Validate the URL
+    if [[ ! "$PLEX_URL" =~ ^https?:// ]]; then
+        echo "Error: Invalid URL. Please provide a valid Plex URL."
+        exit 1
+    fi
+
+    # Extract base IP and token
+    BASE_IP=$(echo "$PLEX_URL" | sed -n 's#https\?://\([^/]*\)/.*#\1#p')
+    URL_TOKEN=$(echo "$PLEX_URL" | sed -n 's/.*[?&]X-Plex-Token=\([^&]*\).*/\1/p')
+
+    if [[ -z "$BASE_IP" || -z "$URL_TOKEN" ]]; then
+        echo "Error: Could not extract base IP or token."
+        exit 1
+    fi
 fi
+
 
 # Build playlist query URL
 PLAYLISTS_URL="http://${BASE_IP}/playlists/all/?X-Plex-Token=${URL_TOKEN}"
