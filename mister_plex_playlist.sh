@@ -23,7 +23,7 @@ samvideo_source="youtube"
 
 
 # Prompt for Plex full URL (e.g. from "Get XML")
-echo "Please paste the full Plex URL (with token):"
+echo "Please paste the full Plex XML URL:"
 read -r PLEX_URL
 
 # Validate the URL
