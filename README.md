@@ -23,7 +23,7 @@ Easy way to play videos on your MiSTer through Plex. All you need is SSH access
 - It will most likely not work fullscreen and this script is not meant for HDMI displays
 
 ## Plex Playlist Support
-- Thanks to user **randomly-generated** we now have playlist support for plex.
+- Thanks to user *randomly-generated* we now have playlist support for plex.
 - Use `mister_plex_playlist.sh`
 - Paste XML from any random file like explained above [View XML](https://support.plex.tv/articles/201998867-investigate-media-information-and-formats/)
 - The SSH script will now display your video playlistss you have on Plex
