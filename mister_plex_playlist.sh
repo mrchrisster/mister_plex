@@ -16,7 +16,9 @@ sv_inimod="yes" # Update MiSTer.ini with CRT values. Set to no if you want to le
 samvideo_output="CRT"
 samvideo_crtmode320="video_mode=320,27,20,53,240,1,3,15,6500"
 VIDEO_RES="320x240"
-# Set permanent Base IP and URL Token from URL "http://BASE_IP/playlists/all/?X-Plex-Token=URL_Token" - Including the port 32400
+# Set permanent Base IP and URL Token from URL "http://BASE_IP/playlists/all/?X-Plex-Token=URL_Token" 
+#BASE_IP="12-34-56-78.64aa123456789.plex.direct:32400"
+#URL_TOKEN="XcNKJB879BHBIHJQ"
 BASE_IP=""
 URL_TOKEN=""
 
