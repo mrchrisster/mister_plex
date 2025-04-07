@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ -f "/media/fat/Scripts/MiSTer_SAM_on.sh" ]]; then
-	source /media/fat/Scripts/MiSTer_SAM_on.sh --sourceonly
+	source /media/fat/Scripts/MiSTer_SAM_on.sh --source-only
 	if [ "$(ps aux | grep -ice "[M]iSTer_SAM_on")" -ne 0 ]; then
 		/media/fat/Scripts/MiSTer_SAM_on.sh stop
 	fi
