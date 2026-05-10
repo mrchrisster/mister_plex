@@ -16,6 +16,7 @@ Easy way to play videos on your MiSTer through Plex. All you need is SSH access
 - Make sure you do this form a computer that is NOT the one where your Plex server is installed (Otherwise it will create a link to localhost which Mister Plex won't understand) 
 - Pick a video file (ideally sd in 4:3 format) and click on Get Info -> [View XML](https://support.plex.tv/articles/201998867-investigate-media-information-and-formats/)
 - Launch mister plex with `/media/fat/Scripts/mister_plex.sh`
+- To resume from an offset, pass milliseconds as the first argument, for example `/media/fat/Scripts/mister_plex.sh 600`
 - Copy the url of the xml into mister plex script
 
 ## CRT Support

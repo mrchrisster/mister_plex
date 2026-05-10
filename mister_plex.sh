@@ -12,6 +12,9 @@ fi
 
 #### VARIABLES ####
 
+# Optional resume offset in milliseconds. Defaults to 0.
+OFFSET="${1:-0}"
+
 # CRT DEFAULTS
 sv_inimod="yes" #Modify MiSTer.ini to add CRT config mode
 samvideo_output="CRT" 
@@ -76,7 +79,7 @@ misterini_mod
 echo "MiSTer.ini updated successfully with video_mode: $VIDEO_MODE"
 
 # Generate MPlayer command
-TRANSCODE_URL="http://$(echo "$PLEX_URL" | cut -d'/' -f3)/video/:/transcode/universal/start.m3u8?X-Plex-Platform=Chrome&copyts=1&mediaIndex=0&offset=0&path=%2Flibrary%2Fmetadata%2F$METADATA_ID&videoResolution=$VIDEO_RES&maxVideoBitrate=1000&X-Plex-Token=$URL_TOKEN&directStream=0&directPlay=0"
+TRANSCODE_URL="http://$(echo "$PLEX_URL" | cut -d'/' -f3)/video/:/transcode/universal/start.m3u8?X-Plex-Platform=Chrome&copyts=1&mediaIndex=0&offset=$OFFSET&path=%2Flibrary%2Fmetadata%2F$METADATA_ID&videoResolution=$VIDEO_RES&maxVideoBitrate=1000&X-Plex-Token=$URL_TOKEN&directStream=0&directPlay=0"
 
 echo "Generated Transcode URL:"
 echo "$TRANSCODE_URL"
